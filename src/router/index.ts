@@ -1,13 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: '/',
+      component: () => import('../views/sys/Login.vue')
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('../views/sys/Login.vue')
     },
     {
       path: '/about',
@@ -16,8 +19,27 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/disabled',
+      name: 'disabled',
+      component: () => import('../views/AboutView.vue')
     }
   ]
 })
+
+const witeList:string[] = ['/','/login','/404'];
+
+router.beforeEach((to,from,next)=>{
+
+  console.log(from.path);
+  
+  if(!witeList.includes(to.path) && localStorage.getItem('token') == ''){
+    router.push('/login');
+  }else{
+    next();
+  }
+})
+
 
 export default router
