@@ -15,7 +15,7 @@
         </template>
         <el-menu-item-group>
           <template #title><span>Group One</span></template>
-          <el-menu-item index="1-1">item one</el-menu-item>
+          <el-menu-item index="1-1" @click="aaa">文章首页</el-menu-item>
           <el-menu-item index="1-2">item two</el-menu-item>
         </el-menu-item-group>
         <el-menu-item-group title="Group Two">
@@ -47,6 +47,7 @@
   
   <script lang="ts" setup>
   import { ref } from 'vue'
+  import router from '@/router/index'
   import {
     Document,
     Menu as IconMenu,
@@ -55,8 +56,13 @@
   } from '@element-plus/icons-vue'
   
   const isCollapse = ref(false)
+  const aaa = ()=>{
+    router.push('/disabled/article')
+    
+  }
   const handleOpen = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
+    
   }
   const handleClose = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)

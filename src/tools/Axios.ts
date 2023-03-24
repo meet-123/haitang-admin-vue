@@ -1,15 +1,16 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'; 
+import { ElMessage } from 'element-plus';
 // const baseURL  = 'https://www.baidu.com';
 const baseURL  = '/';
 
 
 const instance = axios.create({
     baseURL,
-    timeout: 1000,
     // headers: {"X-Requested-With": "XMLHttpRequest"},
   });
 
 instance.interceptors.request.use((value)=> {
+    value.timeout = 1000;
     return value
 });
 
@@ -26,7 +27,9 @@ instance.interceptors.response.use((value:AxiosResponse)=> {
             }
         case 500 :
             {
-                //服务器错误
+
+                
+                ElMessage.error('请求失败');
             }
         case 404 :
             {
@@ -39,7 +42,7 @@ instance.interceptors.response.use((value:AxiosResponse)=> {
 });
 type responseDataType<T> = {
     code:Number,
-    success:Boolean,
+    msg:string,
     data:T
 }
 

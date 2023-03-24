@@ -25,7 +25,14 @@ const router = createRouter({
     {
       path: '/disabled',
       name: 'disabled',
-      component: () => import('../views/Disabled.vue')
+      component: () => import('../views/Disabled.vue'),
+      children:[
+        {
+          path: 'article',
+          name: 'article',
+          component: () => import('../views/article/index.vue')
+        },
+      ]
     }
   ]
 })
@@ -34,8 +41,6 @@ const witeList:string[] = ['/','/login','/404'];
 
 router.beforeEach((to,from,next)=>{
 
-  console.log(from.path);
-   
   if(!witeList.includes(to.path) && localStorage.getItem('token') == ''){
     router.push('/login');
   }else{

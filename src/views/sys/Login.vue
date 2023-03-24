@@ -5,10 +5,10 @@
     </div>
     <el-form :model="form" label-width="120px" class="form">
       <el-form-item label="用户名">
-        <el-input v-model="form.name" class="w-300" />
+        <el-input v-model="form.userName" class="w-300" />
       </el-form-item>
       <el-form-item label="密码">
-        <el-input v-model="form.pwd" show-password class="w-300" />
+        <el-input v-model="form.password" show-password class="w-300" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">登录</el-button>
@@ -28,33 +28,36 @@ import { mapActions } from "pinia";
 const store = useUserStore();
 
 type LoginForm = {
-  name: string;
-  pwd: string;
+  userName: string;
+  password: string;
+  nickName:string
 };
 let form = reactive<LoginForm>({
-  name: "",
-  pwd: "",
+  userName: "",
+  password: "",
+  nickName:""
 });
 
 const resetData = () => {
-  form.name = "";
-  form.pwd = "";
+  form.userName = "";
+  form.password = "";
   localStorage.setItem("token", "");
 };
 
 const onSubmit = async () => {
-  if (form.name == "") {
+  if (form.userName == "") {
     ElMessage.error("姓名不能为空");
     return;
   }
-  if (form.pwd == "") {
+  if (form.password == "") {
     ElMessage.error("密码不能为空");
     return;
   }
-  if (form.pwd.length < 6) {
+  if (form.password.length < 6) {
     ElMessage.error("密码长度最低6位");
     return;
   }
+  form.nickName = form.userName;
   store.doLogin(form);
 };
 </script>

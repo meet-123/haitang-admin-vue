@@ -9,11 +9,11 @@
       
       <div class="avatar">
         <el-avatar :size="30" :src="store.userInfo.avatar" />
-        <span>{{store.userInfo.name}}</span>
+        <span>{{store.userInfo.userName}}</span>
       </div>
-      <el-icon class="el-icon--right">
+      <!-- <el-icon class="el-icon--right">
         <arrow-down />
-      </el-icon>
+      </el-icon> -->
     </span>
     <template #dropdown>
       <el-dropdown-menu>
@@ -34,6 +34,7 @@ import {ref,reactive} from 'vue';
 import { useUserStore } from "@/stores/userInfo";
 
 const store = useUserStore();
+
 
 const logout = ()=>{
   store.logout();

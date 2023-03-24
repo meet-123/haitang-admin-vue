@@ -6,22 +6,25 @@ import type {LoginForm,UserInfoType} from "@/types/user_typs"
 
 
 export const useUserStore = defineStore('user', () => {
+    
     const userInfo = reactive<UserInfoType>({
-        id:'',
-        name:'admin',
-        avatar:'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+            userName: '',
+            nickName: '',
+            id: 0,
+            token: '',
     })
     const token = ref('')
     const  doLogin = async (form:LoginForm)=>{
-       let data = await LoginApi(form);
-       if(data.code == 200){
-        localStorage.setItem('token',data.data)
-        token.value = data.data
-        let u = await getUserInfoApi({'token':token.value})
-        
-        userInfo.id = u.data.id
-        userInfo.name =u.data.name
-        userInfo.avatar = u.data.avatar || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+       let loginData = await LoginApi(form);
+      
+       if(loginData.code == 200){
+        token.value = loginData.data.token
+        localStorage.setItem('token',token.value)
+        userInfo.userName = loginData.data.userName
+        userInfo.nickName = loginData.data.nickName
+        userInfo.id = loginData.data.id
+        userInfo.token = loginData.data.token
+
         router.push('/disabled')
        }
    }
@@ -44,7 +47,7 @@ export const useUserStore = defineStore('user', () => {
             {
                 key:'userInfo',
                 storage:localStorage,
-                paths:['token','userInfo']
+                // paths:['token','data']
             }
         ]
     }
