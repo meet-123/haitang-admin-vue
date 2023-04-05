@@ -42,7 +42,7 @@
       <el-table-column property="address" label="地址" show-overflow-tooltip />
       <el-table-column label="操作" width="180">
         <template #default="scope">
-        <el-button size="small" >修改</el-button>
+        <el-button size="small" @click="edit(1)">修改</el-button>
         <el-button size="small" type="danger">删除</el-button>
 
         </template>
@@ -72,9 +72,11 @@
   <script lang="ts" setup>
   import { ref } from 'vue'
   import { ElTable } from 'element-plus'
-import { Search } from '@element-plus/icons-vue'
+  import { Search } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router';  
+
   
-  
+
   interface User {
     date: string
     name: string
@@ -82,13 +84,21 @@ import { Search } from '@element-plus/icons-vue'
   }
 
 
-
+  const router = useRouter();
 
   let catogry_id = ref('');
   let keyword = ref('');
   let date = ref('');
 
-  
+  const edit = (id:number)=>{
+    id = 7;
+      router.push({
+        path:'/disabled/article/edit',
+        query:{
+          id
+        }
+      })
+  }
   
   
   const multipleTableRef = ref<InstanceType<typeof ElTable>>()

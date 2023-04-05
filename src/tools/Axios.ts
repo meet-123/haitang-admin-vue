@@ -6,18 +6,17 @@ const baseURL  = '/';
 
 const instance = axios.create({
     baseURL,
-    // headers: {"X-Requested-With": "XMLHttpRequest"},
   });
 
 instance.interceptors.request.use((value)=> {
     value.timeout = 1000;
+    value.headers.token = localStorage.getItem('token') || ''
     return value
 });
 
 
-
-
 instance.interceptors.response.use((value:AxiosResponse)=> {
+
     const {code,success,data } = value.data;
      switch (code) {
         case 200 :
@@ -25,11 +24,9 @@ instance.interceptors.response.use((value:AxiosResponse)=> {
                 return value.data 
                 break;
             }
-        case 500 :
+            case 403:
             {
-
-                
-                ElMessage.error('请求失败');
+                ElMessage.error(value.data.data);
             }
         case 404 :
             {
@@ -39,13 +36,15 @@ instance.interceptors.response.use((value:AxiosResponse)=> {
             break;
     }
    
+},err=>{
+    ElMessage.error('服务器发生错误，请刷新后重新提交');
+   
 });
 type responseDataType<T> = {
     code:Number,
     msg:string,
     data:T
 }
-
 const http = {
         get<T=any>(url:string,config?:AxiosRequestConfig): Promise<responseDataType<T>>{
             return instance.get(url,config);
@@ -55,7 +54,4 @@ const http = {
         }
     }
 
-
-
-
-  export default http
+export default http

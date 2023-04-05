@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export interface LoginDataType {
     userName:string,
     password:string,
@@ -19,3 +21,15 @@ export type LoginForm = {
     password:string,
     nickName?:string
   };
+
+
+export  type ActricleType={
+    title:string
+    content:string,
+    description:string,
+    type:string;
+    id?:Number,
+    publish_time?:string
+}
+
+

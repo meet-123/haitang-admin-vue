@@ -13,10 +13,7 @@ const app = createApp(App)
 
 const store = createPinia();
 store.use(piniaPersist)
-
-
 app.use(store);
-
-app.use(router)
 app.use(ElementPlus)
+app.use(router)
 app.mount('#app')
