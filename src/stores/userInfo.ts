@@ -4,10 +4,13 @@ import { LoginApi,getUserInfoApi } from '@/api'
 import router from '@/router';
 import type {LoginForm,UserInfoType} from "@/types/user_typs"
 
+import { jwtDecode } from '@/tools/jwt';
+
+
 
 export const useUserStore = defineStore('user', () => {
     
-    const userInfo = reactive<UserInfoType>({
+    let userInfo = reactive<UserInfoType>({
             userName: '',
             nickName: '',
             id: 0,
@@ -16,15 +19,19 @@ export const useUserStore = defineStore('user', () => {
     const token = ref('')
     const  doLogin = async (form:LoginForm)=>{
        let loginData = await LoginApi(form);
-      
+        console.log(12312);
+        
        if(loginData.code == 200){
+        const info = reactive((jwtDecode(loginData.data.token) as any ).data as UserInfoType)
+
         token.value = loginData.data.token
         localStorage.setItem('token',token.value)
-        userInfo.userName = loginData.data.userName
-        userInfo.nickName = loginData.data.nickName
-        userInfo.id = loginData.data.id
-        userInfo.token = loginData.data.token
-
+        userInfo.userName = info.userName
+        userInfo.nickName = info.nickName
+        userInfo.id = info.id
+        userInfo.token = info.token
+        
+        
         router.push('/disabled')
        }
    }

@@ -47,7 +47,7 @@ const logout = ()=>{
    background-color: aqua;
    height: 60px;
    margin: auto;
-   background-image: url('https://csdnimg.cn/release/educms/public/img/new_banner_bg.9d4b885e.png');
+  //  background-image: url('https://csdnimg.cn/release/educms/public/img/new_banner_bg.9d4b885e.png');
    background-size: 100% 60px;
   }
   .admin-info{

@@ -46,11 +46,12 @@ const witeList:string[] = ['/','/login','/404'];
 
 router.beforeEach((to,from,next)=>{
 
-  if(!witeList.includes(to.path) && localStorage.getItem('token') == ''){
-    router.push('/login');
-  }else{
-    next();
-  }
+  // if(!witeList.includes(to.path) && localStorage.getItem('token') == ''){
+  //   router.push('/login');
+  // }else{
+  //   next();
+  // }
+  next();
 })
 
 
